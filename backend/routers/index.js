@@ -11,12 +11,13 @@ router.use((req,res,next)=>{
     }
 })
 //引入路由
-
+const user = require('./user');
 
 router.use(express.urlencoded({
     extended:true
 }),express.json())
 
+router.use('/user',user);
 
 
 

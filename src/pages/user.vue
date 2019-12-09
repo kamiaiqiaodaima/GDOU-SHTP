@@ -1,22 +1,26 @@
 <template>
   <div>
-    用户
+   <component :is="currentpage"></component>
     <navjump/>
   </div>
 </template>
 
 <script>
 const navjump = ()=>import('../components/navjump.vue');
+const zhuce = ()=>import('../components/zhuce.vue');
 export default {
   data(){
     return{
-
+      currentpage:''
     }
   },
   components:{
-    navjump
+    navjump,
+    zhuce
   },
-  mounted(){}
+  mounted(){
+    this.currentpage = "zhuce"
+  }
 }
 </script>
 

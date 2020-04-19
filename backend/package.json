@@ -12,6 +12,7 @@
     "express": "^4.17.1"
   },
   "dependencies": {
-    "mongodb": "^3.3.5"
+    "mongodb": "^3.3.5",
+    "supervision": "0.0.2"
   }
 }

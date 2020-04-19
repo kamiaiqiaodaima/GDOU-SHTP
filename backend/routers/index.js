@@ -11,15 +11,18 @@ router.use((req,res,next)=>{
     }
 })
 //引入路由
-const user = require('./user');
+const users = require('./users');
+const slideshow = require('./slideshow');
+const products = require('./products');
+const admin = require('./admin');
 
 router.use(express.urlencoded({
     extended:true
 }),express.json())
 
-router.use('/user',user);
-
-
-
+router.use('/users',users);
+router.use('/slideshow',slideshow);
+router.use('/products',products);
+router.use('/admin',admin);
 
 module.exports = router;

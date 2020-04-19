@@ -1,5 +1,5 @@
 {
     "port":6325,
     "mongourl":"mongodb://localhost:27017",
-    "mongoname":"GDOU-SHTP"
+    "mongoname":"GDOU_SHTP"
 }

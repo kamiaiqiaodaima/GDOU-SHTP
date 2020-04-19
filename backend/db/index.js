@@ -1,5 +1,6 @@
 const{MongoClient} = require('mongodb');
 const {mongourl,mongoname} = require('../config.json');
+const ObjectId = require('mongodb').ObjectID;
 //mongodb连接函数
 async function connect(){
     let result;
@@ -42,7 +43,7 @@ async function remove(colName,query){
     let col = db.collection(colName);
     let result;
     if(query._id){//根据mongo自动生成的_id作为条件
-       result = await col.deleteMany({$or:[{_id:Objid(query._id)}]})
+       result = await col.deleteMany({$or:[{_id:ObjectId(query._id)}]})
     }else{
         result = await col.deleteMany({$or:query});
     }
@@ -59,7 +60,7 @@ async function update(colName,query,data){
     let col = db.collection(colName);
     let result;
     if(query._id){//根据_id作为条件
-        result = await col.updateMany({_id:Objid(query._id)},{$set:data})
+        result = await col.updateMany({_id:ObjectId(query._id)},{$set:data})
     }else{
         result = await col.updateMany(query,{$set:data});
     }
@@ -68,6 +69,10 @@ async function update(colName,query,data){
 }
 /**
  * 查
+ * colName 查找的结合名字
+ * query 查找的条件
+ * page 页码
+ * sk 一页的数量
  */
 async function find(colName,query={},page,sk){
     let{db,client} = await connect();

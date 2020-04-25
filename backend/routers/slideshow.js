@@ -7,7 +7,6 @@ let {formatData} = require('../utils');
 //根据productid获取所有轮播图
 router.get('/all',async (req,res)=>{
     let slideshowId = await mongo.find(colName);
-    console.log(slideshowId)
     slideshowIdArr = slideshowId.map(function(item){
         return {
             _id:ObjectId(item.PRODUCTSID.trim()) 
@@ -24,7 +23,7 @@ router.get('/all',async (req,res)=>{
 router.delete('/del',async (req,res)=>{
     let {productid} = req.body;
     try{
-        mongo.remove(colName,{PRODUCTSID:productid})
+        await mongo.remove(colName,[{PRODUCTSID:productid}])
         res.send(formatData());
     }catch{
         res.send(formatData({code:0}))
@@ -34,7 +33,7 @@ router.delete('/del',async (req,res)=>{
 router.post('/add',async (req,res)=>{
     let {productid} = req.body;
     try{
-       mongo.create(colName,{PRODUCTSID:productid});
+       await mongo.create(colName,[{PRODUCTSID:productid}]);
        res.send(formatData());
     }catch{
        res.send(formatData({code:0}))

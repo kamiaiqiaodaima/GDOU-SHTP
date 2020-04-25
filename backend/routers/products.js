@@ -112,5 +112,17 @@ router.post('/update',async (req,res)=>{
     }
     
 })
+//根据商品_id删除商品
+router.post('/del',async (req,res)=>{
+    let {
+        productid
+    } = req.body;
+    try{
+        await mongo.remove(colName,{_id:productid});
+        res.send(formatData({data:"删除成功"}))
+    }catch(err){
+        res.send(formatData({code:0,data:err}))
+    }
+})
 
 module.exports = router;

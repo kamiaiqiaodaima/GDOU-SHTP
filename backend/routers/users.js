@@ -55,7 +55,6 @@ router.post('/register',async (req,res)=>{
         userwechat,
         userclass
     } = req.body;
-    console.log(req.body)
     if(username&&usersno&&userpsw&&userdorm&&userphone&&userclass){
         try{
            let result = await mongo.create(colName,[{
@@ -143,6 +142,18 @@ router.post('/search',async (req,res)=>{
         res.send(formatData({data:searchUserList}));
     }else{
         res.send(formatData({data:"没有查到相关用户"}));
+    }
+})
+//根据_id删除用户
+router.post('/del',async (req,res)=>{
+    let {
+        id
+    } = req.body;
+    try{
+       await mongo.remove(colName,{_id:id})
+       res.send(formatData({data:"用户删除成功"}))
+    }catch (err){
+       res.send(formatData({code:0,data:err}))
     }
 })
 

@@ -17,7 +17,7 @@
 </template>
 
 <script>
-const navjump = ()=>import('../components/navjump.vue');
+const navjump = ()=>import('../components/shouye/navjump.vue');
 export default {
   data(){
     return{

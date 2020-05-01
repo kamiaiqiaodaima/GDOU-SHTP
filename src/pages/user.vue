@@ -6,7 +6,7 @@
 </template>
 
 <script>
-const navjump = ()=>import('../components/navjump.vue');
+const navjump = ()=>import('../components/shouye/navjump.vue');
 const zhuce = ()=>import('../components/zhuce.vue');
 export default {
   data(){

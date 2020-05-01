@@ -40,7 +40,12 @@ router.get('/type',async (req,res)=>{
         pagesize,
         pagenum
     } = req.query;
-    let typeProductsList = await mongo.find(colName,{PRODUCT_CLASS:type},pagenum,pagesize);
+    let typeProductsList;
+    if(type){
+        typeProductsList = await mongo.find(colName,{PRODUCT_CLASS:type},pagenum,pagesize);
+    }else{
+        typeProductsList = await mongo.find(colName,{},pagenum,pagesize);
+    }
     if(typeProductsList.length>0){
         res.send(formatData({data:typeProductsList}));
     }else{

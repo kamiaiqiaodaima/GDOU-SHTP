@@ -15,6 +15,7 @@ const users = require('./users');
 const slideshow = require('./slideshow');
 const products = require('./products');
 const admin = require('./admin');
+const productType = require('./productType');
 
 router.use(express.urlencoded({
     extended:true
@@ -24,5 +25,6 @@ router.use('/users',users);
 router.use('/slideshow',slideshow);
 router.use('/products',products);
 router.use('/admin',admin);
+router.use('/productType',productType);
 
 module.exports = router;

@@ -23,32 +23,32 @@ export default {
                     name:'首页',
                     id:0,
                     path:'/',
-                    img1:require('../assets/sy01.png'),
-                    img2:require('../assets/syh01.png'),
+                    img1:require('../../assets/sy01.png'),
+                    img2:require('../../assets/syh01.png'),
                     active:this.$route.path=='/'||this.$route.path=='/shouye'?true:false
                 },
                  {
                     name:'快速分类',
                      id:1,
                     path:'/fenlei',
-                    img1:require('../assets/fll02.png'),
-                    img2:require('../assets/flh02.png'),
+                    img1:require('../../assets/fll02.png'),
+                    img2:require('../../assets/flh02.png'),
                     active:this.$route.path=='/fenlei'?true:false
                 },
                  {
                     name:'收藏',
                      id:2,
                     path:'/collection',
-                    img1:require('../assets/csgj_cur.png'),
-                    img2:require('../assets/csgj.png'),
+                    img1:require('../../assets/csgj_cur.png'),
+                    img2:require('../../assets/csgj.png'),
                     active:this.$route.path=='/collection'?true:false
                 },
                   {
                     name:'个人中心',
                      id:3,
                     path:'/user',
-                    img1:require('../assets/renl.png'),
-                    img2:require('../assets/ren.png'),
+                    img1:require('../../assets/renl.png'),
+                    img2:require('../../assets/ren.png'),
                     active:this.$route.path=='/user'?true:false
                 }
             ]

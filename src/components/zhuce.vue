@@ -4,7 +4,7 @@
 
 <el-container>
   <el-header>用户注册</el-header>
-    <el-main>   
+    <el-main style="overflow:auto;">   
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="用户名" prop="Username">
                 <el-input v-model="ruleForm.Username"></el-input>
@@ -37,7 +37,7 @@
  </div>
 </template>
 <script>
-const {checkname,createuser} = require('../api');
+const {checkname,checksno,createuser} = require('../api');
 export default {
      data() {
          var checkUsername = (rule, value, callback) => {
@@ -49,7 +49,8 @@ export default {
             callback(new Error('用户名应为3到8位字符'));
           } else {
               let data =await checkname(value);
-              if(data.code===1){
+              window.console.log(data);
+              if(data.data===0){
                   callback(); 
               }else{
                   callback(new Error('用户名已存在，请重新命名')); 
@@ -98,11 +99,17 @@ export default {
             callback();
         }
       };
-         var checkstudynum = (rule,value,callback)=>{//学号验证
+         var checkstudynum =async (rule,value,callback)=>{//学号验证
         if(!(/^20\d{10}$/.test(value.trim()))){
             callback(new Error('请输学号,例如201611921119'));
         }else{
-            callback();
+            let data = await checksno(value);
+            window.console.log(data);
+            if(data.data===1){
+              callback(new Error('该学号已被人注册,若不是本人操作,请联系管理员'));
+            }else{
+              callback();
+            }
         }
       }
       return {
@@ -154,16 +161,19 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.el-main{
+   height:calc(100vh - 113px);
+}
 .zhuce::v-deep .el-header{
     line-height: 60px;
     text-align: center;
     font-size: 5vw;
-    margin-top: 5vw;
 }
-::v-deep .el-form-item:last-child .el-form-item__content{
-   text-align: center;
-   button{
-      transform: translateX(-50px) 
-   }
+::v-deep .el-form-item__label{
+  width: 70px !important;
+}
+::v-deep .el-form-item__content{
+  margin-left: 70px !important;
+  padding-right: 5vw;
 }
 </style>

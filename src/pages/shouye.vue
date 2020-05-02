@@ -1,7 +1,7 @@
 <template>
   <div class="infinite-list-wrapper top-part" style="overflow:auto">
     <div>
-      <keep-alive>
+      <!-- <keep-alive> -->
       <header>
         <search/>
         <div class="fenlei">
@@ -21,11 +21,11 @@
 
       </div> -->
       <div class="productList" style="margin-top:15px">
-          <productList 
+          <product-list 
           :pdSize="pdSize"/>
       </div>
       <navjump/>
-      </keep-alive>
+      <!-- </keep-alive> -->
     </div>
   </div>
 </template>

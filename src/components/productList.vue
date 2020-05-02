@@ -11,7 +11,15 @@
           <span class="time">发布时间：{{item.RELEASE_DATE}}</span>
       </li>
     </ul>
-    <p v-if="loading">加载中...</p>
+    <div 
+    v-if="loading"
+    v-loading="loading"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    class="loading">
+
+    </div>
+    <!-- <p v-if="loading">加载中...</p> -->
     <p v-if="noMore">没有更多了</p>
   </div>
 </template>
@@ -33,8 +41,6 @@ export default {
     async created(){
         let {data}= await getProductNum();
         this.pdNum = data;
-        // this.pdList  = await getLazyProductList (5,1);
-        // window.console.log(this.pdList);
     },
     computed: {
       noMore () {
@@ -46,15 +52,13 @@ export default {
     },
     methods: {
       load () {
-        window.console.log(222);
         this.loading = true
         setTimeout(async () => {
-            let data = await getLazyProductList (5,this.pagenum);
-            this.pagenum+=1;
-            this.pdList=this.pdList.concat(data);
-            window.console.log(this.pdList);
+          let data = await getLazyProductList (this.pdSize,this.pagenum);
+          this.pagenum+=1;
+          this.pdList=this.pdList.concat(data);
           this.loading = false
-        }, 2000)
+        }, 0.1)
       }
     }
 }
@@ -63,9 +67,16 @@ export default {
 ul,li{
     list-style: none;
 }
+.loading{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 .list-item{
     width: 100%;
-    height: 330px;
+    height: 34vh;
     border-radius: 5px;
     position: relative;
     background-color: #fff;
@@ -73,11 +84,11 @@ ul,li{
     margin-bottom: 15px;
     img{
         width: 100%;
-        height: 245px;
+        height: 24vh;
         border-radius: 5px 5px 0 0;
     }
     .detail{
-        margin: 10px;
+        margin:5px 10px;
         text-overflow: ellipsis;
         white-space: nowrap;
         color: rgba(0, 0, 0, 0.85);

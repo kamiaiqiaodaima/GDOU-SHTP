@@ -2,10 +2,20 @@ import axios from 'axios';
 let shtp = axios.create({
     baseURL:'http://localhost:6325'
 })
+//查询数据库用户名是否存在
 export async function checkname(datas){
-    let {data} = await shtp.get('/user/check',{
+    let {data} = await shtp.get('/users/checkUsername',{
         params:{
-            username:datas.username
+            username:datas
+        }
+    });
+    return data;
+}
+//学号是否存在
+export async function checksno(datas){
+    let {data} = await shtp.get('/users/checkUsersno',{
+        params:{
+            usersno:datas
         }
     });
     return data;
@@ -62,5 +72,6 @@ export default {
     getLunboList,
     getLazyProductList,
     getProductNum,
-    getProductType
+    getProductType,
+    checksno
 }

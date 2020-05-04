@@ -11,6 +11,10 @@ const shouye = ()=>import('../pages/shouye.vue');
 const fenlei = ()=>import('../pages/fenlei.vue');
 const collection = ()=>import('../pages/collection.vue');
 const user = ()=>import('../pages/user.vue');
+const zhuce = ()=>import('../components/zhuce.vue');
+const MUProduct = ()=>import('../components/MUProduct.vue');
+const modifyPersonalInf = ()=>import('../components/modifyPersonalInf.vue');
+const log = ()=>import('../components/log.vue');
 let router = new VueRouter({
     mode:'hash',
     routes:[
@@ -38,6 +42,26 @@ let router = new VueRouter({
             path:'/user',
             component:user
         },
+        {
+            name:'zhuce',
+            path:'/user/zhuce',
+            component:zhuce
+        },
+        {
+            name:'MUProduct',
+            path:'/user/MUProduct',
+            component:MUProduct
+        },
+        {
+            name:'modifyPersonalInf',
+            path:'/user/modifyPersonalInf',
+            component:modifyPersonalInf
+        },
+        {
+            name:'log',
+            path:'/user/log',
+            component:log
+        }
     ]
 })
 export default router;

@@ -1,13 +1,13 @@
 <template>
   <div>
-   <component :is="currentpage"></component>
+   <component @changePage = changePage :is="currentpage"></component>
     <navjump/>
   </div>
 </template>
 
 <script>
 const navjump = ()=>import('../components/shouye/navjump.vue');
-const zhuce = ()=>import('../components/zhuce.vue');
+const mine = ()=>import('../components/mine.vue');
 export default {
   data(){
     return{
@@ -16,10 +16,16 @@ export default {
   },
   components:{
     navjump,
-    zhuce
+    mine
   },
   mounted(){
-    this.currentpage = "zhuce"
+    this.currentpage = "mine"
+  },
+  methods:{
+    changePage(val){
+      window.console.log(val,123)
+      this.currentpage = val;
+    }
   }
 }
 </script>

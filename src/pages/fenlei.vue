@@ -82,7 +82,6 @@ export default {
   methods: {
     load () {
         this.loading = true
-        window.console.log(12312)
         setTimeout(async () => {
             let data = await getLazyProductList (10,this.pagenum,this.nowType);
             this.nowTypeList = this.nowTypeList.concat(data);

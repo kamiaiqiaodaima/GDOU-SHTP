@@ -14,7 +14,13 @@ import {
     Loading,
     InfiniteScroll,
     Menu,
-    MenuItem
+    MenuItem,
+    Notification,
+    Avatar,
+    Card,
+    PageHeader,
+    Checkbox,
+    CheckboxGroup
 } from 'element-ui';
 
 Vue.use(Carousel);
@@ -31,3 +37,9 @@ Vue.use(Loading);
 Vue.use(InfiniteScroll);
 Vue.use(Menu);
 Vue.use(MenuItem);
+Vue.use(Avatar);
+Vue.use(Card);
+Vue.use(PageHeader);
+Vue.use(Checkbox);
+Vue.use(CheckboxGroup);
+Vue.prototype.$notify = Notification;

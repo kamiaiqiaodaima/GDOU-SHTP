@@ -141,7 +141,7 @@ router.post('/search',async (req,res)=>{
     if(searchUserList.length>0){
         res.send(formatData({data:searchUserList}));
     }else{
-        res.send(formatData({data:"没有查到相关用户"}));
+        res.send(formatData({data:[]}));
     }
 })
 //根据_id删除用户
@@ -154,6 +154,30 @@ router.post('/del',async (req,res)=>{
        res.send(formatData({data:"用户删除成功"}))
     }catch (err){
        res.send(formatData({code:0,data:err}))
+    }
+})
+//根据用户_id返回用户收藏的商品
+router.post('/collect',async (req,res)=>{
+    let {
+        id
+    } = req.body;
+    try{
+        let users = await mongo.find(colName,{_id:ObjectId(id)});
+        let collectIdList = users[0].USER_COLLECT;
+        if(collectIdList.length>0){
+            let collectList=[];
+            let reqId = [];
+            await collectIdList.forEach(async function(item){
+                reqId.push({_id:ObjectId(item)})
+            })
+            let data = await mongo.find('products',reqId);
+            collectList = collectList.concat(data);
+            res.send(formatData({code:1,data:collectList}))
+        }else{
+            res.send(formatData({code:1,data:[]}))
+        }
+    }catch (err) {
+        res.send(formatData({code:0,data:err}))
     }
 })
 

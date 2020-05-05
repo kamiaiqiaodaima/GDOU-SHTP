@@ -3,15 +3,18 @@
     <div>
       <!-- <keep-alive> -->
       <header>
-        <search/>
-        <div class="fenlei">
+        <div class="search"  @click="goSearch">
+          <i class="el-icon-search"></i>
+          <input type="text" placeholder="请输入想要搜索的内容">
+        </div>
+        <div class="fenlei" @click="gofenlei">
           <img :src="fenlei" alt="分类按钮">
           <p>分类</p>
         </div>
       </header>
       <div class="lunbo">
         <el-carousel v-loading="lunboLoading" :interval="5000" arrow="always">
-          <el-carousel-item v-for="item in lunboList" :key="item._id">
+          <el-carousel-item v-for="item in lunboList" :key="item._id" @click.native="godetail(item._id)">
             <img :src="item.PRODUCT_PIC[0]" :alt="item.PRODUCT_NAME" style="width:100%;height:100%">
             <span class="lubolabel">{{item.PRODUCT_NAME}}</span>
           </el-carousel-item>
@@ -21,7 +24,8 @@
 
       </div> -->
       <div class="productList" style="margin-top:15px">
-          <product-list 
+          <product-list
+          @godetail='godetail'
           :pdSize="pdSize"/>
       </div>
       <navjump/>
@@ -32,7 +36,6 @@
 
 <script>
 const navjump = ()=>import('../components/shouye/navjump');
-const search = ()=>import('../components/shouye/search');
 const productList = ()=>import('../components/productList');
 const {getLunboList} = require('../api');
 export default {
@@ -51,13 +54,39 @@ export default {
   },
   components:{
     navjump,
-    search,
     productList
+  },
+  methods:{
+    goSearch(){
+      this.$router.push('/search');
+    },
+    godetail(val){
+            this.$router.push({path:'/productDetail',query:{id:val}})
+    },
+    gofenlei(){
+      this.$router.push('/fenlei');
+    }
   }
 }
 </script>
 
 <style lang='scss' scoped>
+.search{
+    border-radius: 5vw; 
+    border: none;
+    height: 10vw;
+    width: 80%;
+    margin-right: 5%;
+    padding:0 5%;
+    background-color: #ffffff;
+    input{
+        height: 100%;
+        border: none;
+        width: 90%;
+        outline: none;
+        margin-left: 2vw;
+    }
+}
 .top-part{
   height:calc(100vh - 53px);
   background-color: #44cdb1;

@@ -15,9 +15,18 @@ const zhuce = ()=>import('../components/zhuce.vue');
 const MUProduct = ()=>import('../components/MUProduct.vue');
 const modifyPersonalInf = ()=>import('../components/modifyPersonalInf.vue');
 const log = ()=>import('../components/log.vue');
+const search = () =>import('../components/shouye/search.vue');
+const productDetail = () =>import('../components/productDetail.vue');
+const personalProduct = () =>import('../components/personalProduct.vue');
+
 let router = new VueRouter({
     mode:'hash',
     routes:[
+        {
+            name:'search',
+            path:'/search',
+            component:search
+        },
         {
             name:'shouye',
             path:'/shouye',
@@ -49,8 +58,13 @@ let router = new VueRouter({
         },
         {
             name:'MUProduct',
-            path:'/user/MUProduct',
+            path:'/user/personalProduct/MUProduct',
             component:MUProduct
+        },
+        {
+            name:'personalProduct',
+            path:'/user/personalProduct',
+            component:personalProduct
         },
         {
             name:'modifyPersonalInf',
@@ -61,6 +75,11 @@ let router = new VueRouter({
             name:'log',
             path:'/user/log',
             component:log
+        },
+        {
+            name:'productDetail',
+            path:'/productDetail',
+            component:productDetail
         }
     ]
 })

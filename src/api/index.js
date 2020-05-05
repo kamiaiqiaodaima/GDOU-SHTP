@@ -122,6 +122,74 @@ export async function usercollect (datas){
     });
     return data;
 }
+//根据关键词查找商品
+export async function searchProduct (keywords){
+    let {data} = await shtp.post('/products/search',{
+        keywords:keywords
+    });
+    return data;
+}
+//根据商品id获取商品详细信息
+export async function getProductInfo(id){
+    let {data} = await shtp.post('/products/info',{
+        productid:id
+    });
+    return data;
+}
+//根据用户id查找该用户发布的商品
+export async function getSellProduct(id){
+    let {data} = await shtp.post('/products/sellgoods',{
+        sellerid:id
+    });
+    return data;
+}
+//修改商品信息
+export async function updateProduct (datas){
+    let {data} = await shtp.post('/products/update',{
+        productid:datas.productid,
+        porductname:datas.porductname,
+        productprice:datas.productprice,
+        productnum:datas.productnum,
+        productclass:datas.productclass,
+        sellername:datas.sellername,
+        sellerdorm:datas.sellerdorm,
+        sellerphone:datas.sellerphone,
+        sellerwechat:datas.sellerwechat,
+        sellerclass:datas.sellerclass,
+        sellersno:datas.sellersno,
+        deadline:datas.deadline,
+        describe:datas.describe
+    });
+    return data;
+}
+//商品发布
+export async function releaseProduct (datas){
+    let {data} = await shtp.post('/products/release',{
+        PRODUCT_NAME : datas.PRODUCT_NAME,
+        PRODUCT_PRICE : datas.PRODUCT_PRICE,
+        PRODUCT_NUM :  datas.PRODUCT_NUM,
+        PRODUCT_PIC : datas.PRODUCT_PIC,
+        PRODUCT_CLASS : datas.PRODUCT_CLASS,
+        SELLER_NAME :  datas.SELLER_NAME,
+        SELLER_DORM :  datas.SELLER_DORM,
+        SELLER_ID :  datas.SELLER_ID,
+        SELLER_PHONE: datas.SELLER_PHONE,
+        SELLER_WECHAT: datas.SELLER_WECHAT,
+        SELLER_CLASSL: datas.SELLER_CLASSL,
+        SELLER_SNO: datas.SELLER_SNO,
+        RELEASE_DATE: datas.RELEASE_DATE,
+        DEADLINE: datas.DEADLINE,
+        DESCRIBE: datas.DESCRIBE,
+    });
+    return data;
+}
+//下架商品
+export async function delProduct (id){
+    let {data} = await shtp.post('/products/del',{
+        productid:id
+    });
+    return data;
+}
 export default {
     shtp,
     checkname,
@@ -136,5 +204,11 @@ export default {
     userLog,
     modifyUser,
     userSearch,
-    usercollect
+    usercollect,
+    searchProduct,
+    getProductInfo,
+    getSellProduct,
+    updateProduct,
+    releaseProduct,
+    delProduct
 }

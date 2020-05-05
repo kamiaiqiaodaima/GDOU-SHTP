@@ -4,7 +4,7 @@
       class="list"
       v-infinite-scroll="load"
       infinite-scroll-disabled="disabled">
-      <li v-for="item in pdList" :key="item._id" class="list-item">
+      <li v-for="item in pdList" :key="item._id" @click="godetail2(item._id)" class="list-item">
           <img :src="item.PRODUCT_PIC[0]" :alt="item.PRODUCT_NAME">
           <p class="detail">{{item.PRODUCT_NAME}}</p>
           <span class="price">￥{{item.PRODUCT_PRICE}}</span>
@@ -59,6 +59,9 @@ export default {
           this.pdList=this.pdList.concat(data);
           this.loading = false
         }, 0.1)
+      },
+      godetail2(val){
+        this.$emit("godetail",val);
       }
     }
 }

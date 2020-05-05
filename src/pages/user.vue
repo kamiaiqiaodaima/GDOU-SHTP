@@ -23,7 +23,6 @@ export default {
   },
   methods:{
     changePage(val){
-      window.console.log(val,123)
       this.currentpage = val;
     }
   }

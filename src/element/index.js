@@ -20,7 +20,12 @@ import {
     Card,
     PageHeader,
     Checkbox,
-    CheckboxGroup
+    CheckboxGroup,
+    Select,
+    Option,
+    DatePicker,
+    TimePicker
+    
 } from 'element-ui';
 
 Vue.use(Carousel);
@@ -42,4 +47,8 @@ Vue.use(Card);
 Vue.use(PageHeader);
 Vue.use(Checkbox);
 Vue.use(CheckboxGroup);
+Vue.use(Select);
+Vue.use(Option);
+Vue.use(DatePicker);
+Vue.use(TimePicker);
 Vue.prototype.$notify = Notification;

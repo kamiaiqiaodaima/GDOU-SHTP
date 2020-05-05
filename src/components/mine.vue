@@ -38,7 +38,7 @@ export default {
                 {
                     class:'el-icon-present',
                     name:'个人商品管理',
-                    click:'MUProduct'
+                    click:'personalProduct'
                 },
                 {
                     class:'el-icon-user-solid',

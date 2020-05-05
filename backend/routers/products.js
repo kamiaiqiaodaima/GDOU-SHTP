@@ -3,6 +3,8 @@ const router = express.Router();
 const mongo = require('../db');
 let colName = 'products';
 const ObjectId = require('mongodb').ObjectID;
+const multer = require('multer');
+const fs = require('fs');
 let {formatData} = require('../utils');
 //根据用户id查找该用户销售的商品
 router.post('/sellgoods',async (req,res)=>{
@@ -127,6 +129,88 @@ router.post('/del',async (req,res)=>{
         res.send(formatData({data:"删除成功"}))
     }catch(err){
         res.send(formatData({code:0,data:err}))
+    }
+})
+//根据商品ID获取商品信息
+router.post('/info',async (req,res)=>{
+    let {
+        productid
+    } = req.body;
+    try{
+        let data = await mongo.find(colName,{_id:ObjectId(productid)});
+        res.send(formatData({data:data}))
+    }catch(err){
+        res.send(formatData({code:0,data:err}))
+    }
+})
+//上传图片
+router.post('/upload', multer({
+    //设置文件存储路径
+    dest: 'static'   //upload文件如果不存在则会自己创建一个。
+}).single('file'), function (req, res, next) {
+    if (req.file.length === 0) {  //判断一下文件是否存在，也可以在前端代码中进行判断。
+        res.render("error", { message: "上传文件不能为空！" });
+        return
+    } else {
+        let file = req.file;
+        let fileInfo = {};
+        fs.renameSync('./static/' + file.filename, './static/' + file.originalname);//这里修改文件名字，比较随意。
+        // 获取文件信息
+        fileInfo.mimetype = file.mimetype;
+        fileInfo.originalname = file.originalname;
+        fileInfo.size = file.size;
+        fileInfo.path = file.path;
+        // 设置响应类型及编码
+        res.set({
+            'content-type': 'application/json; charset=utf-8'
+        });
+        res.send('http://47.98.245.185:4399/static/' + fileInfo.originalname);
+    }
+})
+//发布商品
+router.post('/release',async (req,res)=>{
+    let {
+        PRODUCT_NAME,
+        PRODUCT_PRICE,
+        PRODUCT_NUM,
+        PRODUCT_PIC,
+        PRODUCT_CLASS,
+        SELLER_NAME,
+        SELLER_DORM,
+        SELLER_ID,
+        SELLER_PHONE,
+        SELLER_WECHAT,
+        SELLER_CLASS,
+        SELLER_SNO,
+        RELEASE_DATE,
+        DEADLINE,
+        DESCRIBE,
+    } = req.body;
+    if(PRODUCT_NAME&&PRODUCT_PRICE&&PRODUCT_NUM&&PRODUCT_PIC&&PRODUCT_CLASS&&SELLER_NAME){
+        try{
+           let result = await mongo.create(colName,[{
+            PRODUCT_NAME : PRODUCT_NAME,
+            PRODUCT_PRICE : PRODUCT_PRICE,
+            PRODUCT_NUM : PRODUCT_NUM,
+            PRODUCT_PIC :PRODUCT_PIC,
+            PRODUCT_CLASS : PRODUCT_CLASS,
+            SELLER_NAME : SELLER_NAME,
+            SELLER_DORM : SELLER_DORM,
+            SELLER_ID : SELLER_ID,
+            SELLER_PHONE:SELLER_PHONE,
+            SELLER_WECHAT:SELLER_WECHAT,
+            SELLER_CLASS:SELLER_CLASS,
+            SELLER_SNO:SELLER_SNO,
+            RELEASE_DATE:RELEASE_DATE,
+            DEADLINE:DEADLINE,
+            DESCRIBE:DESCRIBE,
+             }]);
+           res.send(formatData({data:result}));
+        }catch(err){
+           res.send(formatData({code:0,data:err}))
+        }
+    }else{
+        res.send(formatData({code:0,data:"必要信息不能为空"}))
     }
 })
 

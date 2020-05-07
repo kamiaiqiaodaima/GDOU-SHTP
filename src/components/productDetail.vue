@@ -27,7 +27,9 @@
                     <span class="text-content pdprice">
                         ￥ <span>{{productInfo.PRODUCT_PRICE}}</span> 
                     </span>
-                    <span style="float:right" @click="upadteCollect()">
+                    <span style="float:right"
+                     v-loading="collectLoading"
+                      @click="upadteCollect()">
                        <i class="el-icon-star-off" v-if="!isCollect"></i>
                        <i class="el-icon-star-off isCollect" v-else></i>
                        收藏
@@ -122,7 +124,8 @@ export default {
            loading:false,
            usercollect:[],
            isCollect:false,
-           userId:''
+           userId:'',
+           collectLoading:false
         }
     },
     async created(){
@@ -159,6 +162,7 @@ export default {
             return translateType(val);
         },
         async upadteCollect(){
+            this.collectLoading = true;
            if(this.userId){
                 if(this.isCollect){
                   this.usercollect= this.usercollect.filter((item)=>{
@@ -176,6 +180,7 @@ export default {
                     type: 'warning'
                 });
            }
+           this.collectLoading = false;
         }
     }
 }

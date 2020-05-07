@@ -9,6 +9,7 @@
                <ul class="search-list" v-if="sellProductList.length>0">
                    <li v-for="item in sellProductList" :key="item._id" @click="goMUProduct(item._id)">
                        <img :src="item.PRODUCT_PIC[0]">
+                       <div class="soldout" v-if="compareTime2(item.DEADLINE)">已过截止时间,不在其它页面展示</div>
                        <div class="info">
                            <div class="title">{{item.PRODUCT_NAME}}</div>
                            <div class="type">{{translateType2(item.PRODUCT_CLASS)}}</div>
@@ -29,7 +30,7 @@
 </template>
 <script>
 const {getSellProduct,delProduct} = require('../api');
-const {translateType,lookCookie} = require('../utils');
+const {translateType,lookCookie,compareTime} = require('../utils');
 export default {
     data(){
         return{
@@ -83,7 +84,10 @@ export default {
                 {path:'/user/personalProduct/MUProduct',
                 query:{id:val}
                 })
-        }
+        },
+        compareTime2(val){
+        return compareTime(val);
+      }
     }
 }
 </script>
@@ -116,6 +120,17 @@ export default {
         background-color: #fff;
         margin-bottom: 10px;
         overflow: hidden;
+        position: relative;
+        .soldout{
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 250px;
+            text-align: center;
+            line-height: 250px;
+            background-color: rgba(0,0,0,0.4);
+            color: #fff;
+        }
         &:hover{
         box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
         }

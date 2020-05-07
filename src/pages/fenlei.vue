@@ -28,7 +28,7 @@
         class="list"
         v-infinite-scroll="load"
         infinite-scroll-disabled="disabled">
-      <li v-for="item in nowTypeList" :key="item._id" class="list-item">
+      <li v-for="item in nowTypeList" v-show="compareTime2(item.DEADLINE)"  @click="godetail(item._id)" :key="item._id" class="list-item">
           <img :src="item.PRODUCT_PIC[0]" :alt="item.PRODUCT_NAME">
           <div class="name">{{item.PRODUCT_NAME}}</div>
       </li>
@@ -47,6 +47,7 @@
 <script>
 const navjump = ()=>import('../components/shouye/navjump.vue');
 const {getProductType,getLazyProductList,getProductNum} = require('../api');
+const {compareTime} = require("../utils");
 export default {
   data(){
     return{
@@ -98,6 +99,12 @@ export default {
        this.nowType = item.TYPE;
        this.pagenum = 1;
        this.load();
+    },
+    compareTime2(val){
+        return compareTime(val);
+      },
+    godetail(val){
+        this.$router.push({path:'/productDetail',query:{id:val}})
     }
 }
 }

@@ -65,12 +65,23 @@ export function dateFormat(fmt, date) {
     }
     return fmt;
 }
-export var uploadUrl = 'http://localhost:6325/products/upload';
+//与现在时间比较大小
+export function compareTime(val){
+   var time = new Date(val).getTime();
+   var now = new Date().getTime();
+   if(time<now){
+       return true;
+   }else{
+       return false;
+   }
+}
+export var uploadUrl = 'http://172.23.121.226:6325/products/upload';
 export default {
     setCookie,
     removeCookie,
     lookCookie,
     translateType,
     dateFormat,
+    compareTime,
     uploadUrl
 }

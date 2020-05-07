@@ -7,7 +7,7 @@
         <el-button @click="delCollect" style="float: right; padding: 3px 0" type="text">删除</el-button>
       </div>
       <el-checkbox-group v-model="checkList">
-      <div v-for="item in collectList" :key="item._id" class="text item scbox">
+      <div v-for="item in collectList" v-show="compareTime2(itme.DEADLINE)" :key="item._id" class="text item scbox">
             <el-checkbox :label="item._id" style="float:left"></el-checkbox>
            <img :src="item.PRODUCT_PIC[0]" class="scimg">
            <div class="content">
@@ -38,7 +38,7 @@
 <script>
 const navjump = ()=>import('../components/shouye/navjump.vue');
 import { usercollect,modifyUser } from '../api';
-const {lookCookie} = require('../utils');
+const {lookCookie,compareTime} = require('../utils');
 export default {
   data(){
     return{
@@ -92,7 +92,10 @@ export default {
       this.collectList = newCollcetList;
       this.loading = false;
       window.console.log(newCollcetList)
-   }
+   },
+   compareTime2(val){
+        return compareTime(val);
+      }
   }
 }
 </script>

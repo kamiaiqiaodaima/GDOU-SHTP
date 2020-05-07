@@ -4,7 +4,7 @@
       class="list"
       v-infinite-scroll="load"
       infinite-scroll-disabled="disabled">
-      <li v-for="item in pdList" :key="item._id" @click="godetail2(item._id)" class="list-item">
+      <li v-for="item in pdList" v-show="compareTime2(item.DEADLINE)" :key="item._id" @click="godetail2(item._id)" class="list-item">
           <img :src="item.PRODUCT_PIC[0]" :alt="item.PRODUCT_NAME">
           <p class="detail">{{item.PRODUCT_NAME}}</p>
           <span class="price">￥{{item.PRODUCT_PRICE}}</span>
@@ -24,8 +24,8 @@
   </div>
 </template>
 <script>
-const {getLazyProductList} = require('../api');
-const {getProductNum} = require('../api');
+const {getLazyProductList,getProductNum} = require('../api');
+const {compareTime} = require('../utils');
 export default {
     props:{
         pdSize:Number
@@ -35,7 +35,8 @@ export default {
         loading:false,
         pdList:[],
         pagenum:1,
-        pdNum:999
+        pdNum:999,
+        nowTime:new Date().getTime()
       }
     },
     async created(){
@@ -62,6 +63,9 @@ export default {
       },
       godetail2(val){
         this.$emit("godetail",val);
+      },
+      compareTime2(val){
+        return compareTime(val);
       }
     }
 }

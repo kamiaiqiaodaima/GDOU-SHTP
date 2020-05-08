@@ -231,7 +231,7 @@ export default {
           this.title = '修改商品发布信息';
           let {data} = await getProductInfo(this.productId);
           this.ruleForm = Object.assign(this.ruleForm,data[0]);
-          window.console.log(data);
+        //   window.console.log(data);
         }else{
             this.isfb = true;
             this.productId='';
@@ -248,7 +248,7 @@ export default {
         }
         this.loading = false;
         
-       window.console.log(this.$route.query)
+    //    window.console.log(this.$route.query)
     },
     methods: {
         handleRemove(file, fileList) {
@@ -321,7 +321,7 @@ export default {
                             type: 'warn'
                             });
                        }
-                       window.console.log(data);
+                    //    window.console.log(data);
                    }
                }
                this.loading = false;

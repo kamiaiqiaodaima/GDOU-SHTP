@@ -84,15 +84,21 @@ export default {
     load () {
         this.loading = true
         setTimeout(async () => {
-            let data = await getLazyProductList (10,this.pagenum,this.nowType);
+            let data = await getLazyProductList (15,this.pagenum,this.nowType);
             this.nowTypeList = this.nowTypeList.concat(data);
             this.pagenum+=1;
-            this.nowTypeList.length<=0?this.nodata=true:this.nodata=false
+            if(this.nowTypeList.length<=0||this.nowTypeList.filter(item =>{
+              return this.compareTime2(item.DEADLINE);
+            }).length<=0){
+               this.nodata=true
+            }else{
+              this.nodata=false
+            }
+            
             this.loading = false;
         }, 0.1)
       },
     navLick(item){
-       window.console.log(item);
        this.nowTypeList = [];
        this.nodata = false;
        this.nowTypeName = item.NAME;

@@ -82,7 +82,6 @@ export default {
            this.loading = true;
            let {username,password} = this.$data.ruleForm;
            let {data} = await userLog({username,password});
-           window.console.log(data);
            if(data.length>0){
                  setCookie ('userId',data[0]._id,1);
                  setCookie ('userName',data[0].USER_NAME,1);

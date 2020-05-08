@@ -3,6 +3,7 @@
         <div class="head">
            <el-page-header @back="goto('/user')" content="我发布的商品">
            </el-page-header>
+           <el-button type="primary" @click="goMUProduct()" >发布新商品<i class="el-icon-plus el-icon--right"></i></el-button>
         </div>
         <div class="box-body"
         v-loading="loading">
@@ -80,10 +81,16 @@ export default {
             return translateType(val);
         },
         goMUProduct(val){
-            this.$router.push(
-                {path:'/user/personalProduct/MUProduct',
-                query:{id:val}
-                })
+            window.console.log(123,val)
+            if(val){
+                this.$router.push(
+                    {path:'/user/personalProduct/MUProduct',
+                    query:{id:val}
+                    })
+            }else{
+                
+                this.$router.push('/user/personalProduct/MUProduct')
+            }
         },
         compareTime2(val){
         return compareTime(val);
@@ -92,6 +99,14 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.head{
+    position: relative;
+    .el-button{
+        position: absolute;
+        right: 18px;
+        top: 18px;
+    }
+}
 .nodata{
   padding-top: 106px;
   text-align: center;

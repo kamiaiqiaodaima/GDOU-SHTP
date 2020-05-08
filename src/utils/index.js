@@ -69,7 +69,7 @@ export function dateFormat(fmt, date) {
 export function compareTime(val){
    var time = new Date(val).getTime();
    var now = new Date().getTime();
-   if(time<now){
+   if(time>now){
        return true;
    }else{
        return false;

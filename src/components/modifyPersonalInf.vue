@@ -146,7 +146,7 @@ export default {
            this.$refs[formName].validate(async (valid) => {
                if(valid){
                    let {pass,Username,dorm,phone,grade,wechat} = this.$data.ruleForm;
-                   window.console.log({pass,Username,dorm,phone,grade,wechat})
+                //    window.console.log({pass,Username,dorm,phone,grade,wechat})
                    let id = lookCookie('userId');
                    if(id){
                        let {data} = await modifyUser({

@@ -24,8 +24,14 @@ import {
     Select,
     Option,
     DatePicker,
-    TimePicker
-    
+    TimePicker,
+    Row,
+    Col,
+    Submenu,
+    Table,
+    TableColumn,
+    Pagination,
+    Tag
 } from 'element-ui';
 
 Vue.use(Carousel);
@@ -51,4 +57,11 @@ Vue.use(Select);
 Vue.use(Option);
 Vue.use(DatePicker);
 Vue.use(TimePicker);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(Submenu);
+Vue.use(Table);
+Vue.use(TableColumn);
+Vue.use(Pagination);
+Vue.use(Tag);
 Vue.prototype.$notify = Notification;

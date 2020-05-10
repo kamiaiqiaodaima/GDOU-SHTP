@@ -111,7 +111,9 @@ export async function modifyUser (datas) {
 //查找用户
 export async function userSearch (datas) {
     let {data} = await shtp.post('/users/search',{
-        keywords:datas.keywords
+        keywords:datas.keywords,
+        pagesize:datas.pagesize,
+        pagenum:datas.pagenum
     });
     return data;
 }
@@ -123,9 +125,11 @@ export async function usercollect (datas){
     return data;
 }
 //根据关键词查找商品
-export async function searchProduct (keywords){
+export async function searchProduct (datas){
     let {data} = await shtp.post('/products/search',{
-        keywords:keywords
+        keywords:datas.keywords,
+        pagenum:datas.pagenum,
+        pagesize:datas.pagesize
     });
     return data;
 }
@@ -190,6 +194,21 @@ export async function delProduct (id){
     });
     return data;
 }
+//管理员登录
+export async function adminLog (datas){
+    let {data} = await shtp.post('/admin/login',{
+        adminname:datas.name,
+        adminpsw:datas.psw
+    });
+    return data;
+}
+//删除用户
+export async function delUser (datas){
+    let {data} = await shtp.post('/users/del',{
+        id:datas.id
+    });
+    return data;
+}
 export default {
     shtp,
     checkname,
@@ -210,5 +229,6 @@ export default {
     getSellProduct,
     updateProduct,
     releaseProduct,
-    delProduct
+    delProduct,
+    adminLog
 }

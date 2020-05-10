@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongo = require('../db');
 let colName = 'admin';
+// eslint-disable-next-line no-unused-vars
 const ObjectId = require('mongodb').ObjectID;
 let {formatData} = require('../utils');
 //管理员登录

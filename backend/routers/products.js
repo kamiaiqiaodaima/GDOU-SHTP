@@ -19,16 +19,28 @@ router.post('/sellgoods',async (req,res)=>{
 //根据商品名、用户名、班级、宿色地址、描述中的关键字查找商品
 router.post('/search',async (req,res)=>{
     let {
-      keywords
+      keywords,
+      pagesize,
+      pagenum
     } = req.body;
-    console.log(keywords)
-    let searchProductsList = await mongo.find(colName,[
-        {PRODUCT_NAME:{$regex:keywords}},
-        {SELLER_NAME:{$regex:keywords}},
-        {SELLER_CLASS:{$regex:keywords}},
-        {SELLER_DORM:{$regex:keywords}},
-        {DESCRIBE:{$regex:keywords}}
-    ])
+    let searchProductsList;
+    if(keywords){
+        searchProductsList = await mongo.find(colName,[
+            {PRODUCT_NAME:{$regex:keywords}},
+            {SELLER_NAME:{$regex:keywords}},
+            {SELLER_CLASS:{$regex:keywords}},
+            {SELLER_DORM:{$regex:keywords}},
+            {DESCRIBE:{$regex:keywords}}
+        ])
+    }else{
+        if(pagesize&&pagenum){
+            searchProductsList = await mongo.find(colName,{},pagenum,pagesize);
+        }else{
+            searchProductsList = await mongo.find(colName);
+            res.send(formatData({data:searchProductsList.length}));
+            return;
+        }
+    }
     if(searchProductsList.length>0){
         res.send(formatData({data:searchProductsList}));
     }else{

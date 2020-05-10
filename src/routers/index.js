@@ -18,10 +18,45 @@ const log = ()=>import('../components/log.vue');
 const search = () =>import('../components/shouye/search.vue');
 const productDetail = () =>import('../components/productDetail.vue');
 const personalProduct = () =>import('../components/personalProduct.vue');
+const regpage = () =>import('../backsystem/regpage.vue');
+const system = () =>import('../backsystem/system.vue');
+const userinf = () =>import('../backsystem/userinf.vue');
+const listinf = () =>import('../backsystem/listinf.vue');
+const adduser = () =>import('../backsystem/adduser.vue');
 
 let router = new VueRouter({
     mode:'hash',
     routes:[
+        {
+            path:'/console',
+            redirect:'/console/regpage'       
+        },
+        {
+            name:'regpage',
+            path:'/console/regpage',
+            component:regpage
+        },
+        {
+            name:'system',
+            path:'/console/system',
+            component:system,
+                children: [{
+                    name: 'userinf',
+                    path: '/userinf',
+                    component: userinf
+                },
+                {
+                    name: 'listinf',
+                    path: '/listinf',
+                    component: listinf
+                },
+                {
+                    name: 'adduser',
+                    path: '/adduser',
+                    component: adduser
+                },
+            ]
+        },
         {
             name:'search',
             path:'/search',

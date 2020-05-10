@@ -128,16 +128,29 @@ router.post('/update',async (req,res)=>{
 //根据用户名、学号、班级、宿色地址、手机号、微信号查找相关用户
 router.post('/search',async (req,res)=>{
     let {
-      keywords
+      keywords,
+      pagesize,
+      pagenum
     } = req.body;
-    let searchUserList = await mongo.find(colName,[
-        {USER_NAME:{$regex:keywords}},
-        {USER_SNO:{$regex:keywords}},
-        {USER_CLASS:{$regex:keywords}},
-        {USER_DORM:{$regex:keywords}},
-        {USER_PHONE:{$regex:keywords}},
-        {USER_WECHAT:{$regex:keywords}}
-    ])
+    let searchUserList;
+    if(keywords){
+        searchUserList = await mongo.find(colName,[
+            {USER_NAME:{$regex:keywords}},
+            {USER_SNO:{$regex:keywords}},
+            {USER_CLASS:{$regex:keywords}},
+            {USER_DORM:{$regex:keywords}},
+            {USER_PHONE:{$regex:keywords}},
+            {USER_WECHAT:{$regex:keywords}}
+        ])
+    }else{
+        if(pagenum&&pagesize){
+            searchUserList = await mongo.find(colName,{},pagenum,pagesize);
+        }else{
+            searchUserList = await mongo.find(colName);
+            res.send(formatData({data:searchUserList.length}));
+            return;
+        }
+    }
     if(searchUserList.length>0){
         res.send(formatData({data:searchUserList}));
     }else{

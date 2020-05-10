@@ -45,7 +45,7 @@ export default {
         },
         async getSearchList(){
             this.loading = true;
-            let {data}= await searchProduct(this.searchcontent);
+            let {data}= await searchProduct({ keywords:this.searchcontent});
             if(data.constructor==Array){
                this.searchList = data;
             }else{

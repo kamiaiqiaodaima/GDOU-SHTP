@@ -2,7 +2,7 @@
 <div class="zhuce">
 <el-page-header @back="goBack" content="用户注册">
    </el-page-header>
-<el-container>
+<el-container v-loading='loading'>
     <el-main style="overflow:auto;">   
         <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="用户名" prop="Username">
@@ -134,6 +134,7 @@ export default {
         }
       }
       return {
+        loading:false,
         ruleForm: {
           pass: '',
           checkPass: '',
@@ -166,6 +167,7 @@ export default {
     },
     methods: {
       submitForm(formName) {
+        this.loading = true;
         this.$refs[formName].validate(async (valid) => {
           if (valid) {//表单全正确，valid为true
           let {pass,Username,dorm,phone,grade,studynum,wechat} = this.$data.ruleForm;
@@ -177,6 +179,8 @@ export default {
                   type: 'success'
                 });
                 setCookie('userId',data.data.ops[0]._id,1);
+                setCookie('userName',Username,1);
+                this.loading = false;
                 this.$router.push('/user')
             }else {
             this.$notify({
@@ -188,6 +192,7 @@ export default {
           }
           } 
         });
+        this.loading = false;
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();

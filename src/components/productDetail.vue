@@ -137,7 +137,6 @@ export default {
         this.userId = lookCookie('userId');
         if(username){
             let data2 = await userSearch({keywords:username});
-            window.console.log(data2);
             this.usercollect = data2.data[0].USER_COLLECT;
             let pdid = this.productId;
             let iscl = this.isCollect;

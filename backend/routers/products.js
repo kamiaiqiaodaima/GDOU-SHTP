@@ -159,6 +159,7 @@ router.post('/info',async (req,res)=>{
 router.post('/upload', multer({
     //设置文件存储路径
     dest: 'static'   //upload文件如果不存在则会自己创建一个。
+// eslint-disable-next-line no-unused-vars
 }).single('file'), function (req, res, next) {
     if (req.file.length === 0) {  //判断一下文件是否存在，也可以在前端代码中进行判断。
         res.render("error", { message: "上传文件不能为空！" });
@@ -176,7 +177,7 @@ router.post('/upload', multer({
         res.set({
             'content-type': 'application/json; charset=utf-8'
         });
-        res.send('http://47.98.245.185:4399/static/' + fileInfo.originalname);
+        res.send('http://172.23.121.226:6325/static/' + fileInfo.originalname);
     }
 })
 //发布商品

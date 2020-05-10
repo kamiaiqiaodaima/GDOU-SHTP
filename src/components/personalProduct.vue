@@ -15,9 +15,9 @@
                            <div class="title">{{item.PRODUCT_NAME}}</div>
                            <div class="type">{{translateType2(item.PRODUCT_CLASS)}}</div>
                            <div class="price">￥<span>{{item.PRODUCT_PRICE}}</span></div>
-                           <span class="seller">
+                           <div class="seller">
                                {{item.SELLER_NAME}}
-                               </span>
+                           </div>
                             <el-button type="danger" style="float:right;padding:8px" @click.stop="delPd(item._id)">下架该商品</el-button>
                        </div>
                    </li>
@@ -81,14 +81,12 @@ export default {
             return translateType(val);
         },
         goMUProduct(val){
-            window.console.log(123,val)
             if(val){
                 this.$router.push(
                     {path:'/user/personalProduct/MUProduct',
                     query:{id:val}
                     })
             }else{
-                
                 this.$router.push('/user/personalProduct/MUProduct')
             }
         },
@@ -103,8 +101,10 @@ export default {
     position: relative;
     .el-button{
         position: absolute;
-        right: 18px;
-        top: 18px;
+        right: 2vw;
+        top: 15px;
+        height: 37px;
+        width: 125px;
     }
 }
 .nodata{
@@ -134,6 +134,7 @@ export default {
         max-width: 49.4%;
         background-color: #fff;
         margin-bottom: 10px;
+        height: 386px;
         overflow: hidden;
         position: relative;
         .soldout{
@@ -188,6 +189,9 @@ export default {
             .seller{
                 color: #999;
                 font-size: 12px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
             }
         }
     }

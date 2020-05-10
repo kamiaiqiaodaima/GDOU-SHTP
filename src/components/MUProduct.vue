@@ -51,7 +51,7 @@
             <el-form-item label="商品描述" prop="DESCRIBE">
                 <el-input type="textarea" v-model="ruleForm.DESCRIBE"></el-input>
             </el-form-item>
-            <el-form-item label="上传图片" prop="PRODUCT_PIC">
+            <el-form-item v-if="isfb" label="上传图片" prop="PRODUCT_PIC">
                 <!-- <el-input type="textarea" v-model="ruleForm.DESCRIBE"></el-input> -->
             <el-upload
                 class="upload-demo"
@@ -59,7 +59,6 @@
                 :on-remove="handleRemove"
                 :on-success="handlePreview"
                 :file-list="fileList"
-                v-if="isfb"
                 list-type="picture">
                 <el-button size="small" type="primary">上传图片</el-button>
                 <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -231,7 +230,6 @@ export default {
           this.title = '修改商品发布信息';
           let {data} = await getProductInfo(this.productId);
           this.ruleForm = Object.assign(this.ruleForm,data[0]);
-        //   window.console.log(data);
         }else{
             this.isfb = true;
             this.productId='';
@@ -247,8 +245,6 @@ export default {
             this.userSno = data[0].USER_SNO;
         }
         this.loading = false;
-        
-    //    window.console.log(this.$route.query)
     },
     methods: {
         handleRemove(file, fileList) {
@@ -259,6 +255,7 @@ export default {
         window.console.log(response, file, fileList);
       },
       async submitForm(formName) {
+          var _self = this;
           this.$refs['ruleForm'].validate(async (valid) => {
               if(valid){
               this.loading = true;
@@ -313,7 +310,7 @@ export default {
                             message: `恭喜你,你的商品已发布成功,可在我发布的商品中查看`,
                             type: 'success'
                             });
-                            this.goBack();
+                            _self.goBack();
                        }else{
                            this.$notify({
                             title: '发布失败',
@@ -321,7 +318,6 @@ export default {
                             type: 'warn'
                             });
                        }
-                    //    window.console.log(data);
                    }
                }
                this.loading = false;

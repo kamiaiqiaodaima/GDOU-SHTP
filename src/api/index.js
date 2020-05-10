@@ -179,7 +179,7 @@ export async function releaseProduct (datas){
         SELLER_ID :  datas.SELLER_ID,
         SELLER_PHONE: datas.SELLER_PHONE,
         SELLER_WECHAT: datas.SELLER_WECHAT,
-        SELLER_CLASSL: datas.SELLER_CLASSL,
+        SELLER_CLASS: datas.SELLER_CLASS,
         SELLER_SNO: datas.SELLER_SNO,
         RELEASE_DATE: datas.RELEASE_DATE,
         DEADLINE: datas.DEADLINE,

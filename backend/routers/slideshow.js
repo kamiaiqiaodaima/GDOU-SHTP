@@ -7,7 +7,7 @@ let {formatData} = require('../utils');
 //根据productid获取所有轮播图
 router.get('/all',async (req,res)=>{
     let slideshowId = await mongo.find(colName);
-    slideshowIdArr = slideshowId.map(function(item){
+    let slideshowIdArr = slideshowId.map(function(item){
         return {
             _id:ObjectId(item.PRODUCTSID.trim()) 
         }

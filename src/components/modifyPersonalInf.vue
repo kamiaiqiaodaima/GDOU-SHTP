@@ -2,7 +2,7 @@
 <div class="zhuce">
 <el-page-header @back="goBack" content="修改个人信息">
    </el-page-header>
-<el-container>
+<el-container v-loading='loading'>
     <el-main style="overflow:auto;">   
         <el-form :model="ruleForm"  status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="用户名" prop="Username">
@@ -21,7 +21,7 @@
                 <el-input v-model="ruleForm.grade"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="pass">
-                <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+                <el-input v-model="ruleForm.pass" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm')">确认修改</el-button>
@@ -37,7 +37,7 @@
  </div>
 </template>
 <script>
-const {modifyUser,checkname,checkuserphone,checkuserwechat} = require('../api');
+const {modifyUser,checkname,checkuserphone,checkuserwechat,userSearch} = require('../api');
 const {lookCookie} = require('../utils');
 export default {
      data() {
@@ -117,6 +117,7 @@ export default {
       }
       }
       return {
+        loading:false,
         ruleForm: {
           pass: '',
           Username: '',//用户名
@@ -141,8 +142,21 @@ export default {
         }
       };
     },
+    async created(){
+        this.loading = true;
+        let username = lookCookie('userName');
+        let {data} = await userSearch({keywords:username});
+        this.ruleForm.Username = data[0].USER_NAME;
+        this.ruleForm.pass = data[0].USER_PSW;
+        this.ruleForm.dorm = data[0].USER_DORM;
+        this.ruleForm.phone = data[0].USER_PHONE;
+        this.ruleForm.grade = data[0].USER_CLASS;
+        this.ruleForm.wechat = data[0].USER_WECHAT;
+        this.loading = false;
+    },
     methods: {
       async submitForm(formName) {
+          this.loading = true;
            this.$refs[formName].validate(async (valid) => {
                if(valid){
                    let {pass,Username,dorm,phone,grade,wechat} = this.$data.ruleForm;
@@ -174,6 +188,7 @@ export default {
                    }
                }
            });
+           this.loading = false;
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();

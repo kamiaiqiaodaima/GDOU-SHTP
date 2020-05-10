@@ -7,7 +7,7 @@
         <el-button @click="delCollect" style="float: right; padding: 3px 0" type="text">删除</el-button>
       </div>
       <el-checkbox-group v-model="checkList">
-      <div v-for="item in collectList" v-show="compareTime2(itme.DEADLINE)" :key="item._id" class="text item scbox">
+      <div v-for="item in collectList" @click="godetail(item._id)" v-show="compareTime2(item.DEADLINE)" :key="item._id" class="text item scbox">
             <el-checkbox :label="item._id" style="float:left"></el-checkbox>
            <img :src="item.PRODUCT_PIC[0]" class="scimg">
            <div class="content">
@@ -75,7 +75,6 @@ export default {
    delCollect(){
      this.loading = true;
      let checkList = this.checkList;
-     window.console.log(checkList)
      let newCollcetList = this.collectList.filter(function(item){
          let isok = true;
          checkList.forEach(function(item2){
@@ -91,11 +90,13 @@ export default {
      modifyUser({id:this.userId,usercollect:newCollcetIdList});
       this.collectList = newCollcetList;
       this.loading = false;
-      window.console.log(newCollcetList)
    },
    compareTime2(val){
         return compareTime(val);
-      }
+      },
+    godetail(val){
+        this.$router.push({path:'/productDetail',query:{id:val}})
+    }
   }
 }
 </script>

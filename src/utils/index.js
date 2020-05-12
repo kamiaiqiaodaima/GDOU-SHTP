@@ -69,13 +69,10 @@ export function dateFormat(fmt, date) {
 export function compareTime(val){
    var time = new Date(val).getTime();
    var now = new Date().getTime();
-   if(time>now){
-       return true;
-   }else{
-       return false;
-   }
+   window.console.log(val,time,now,time>now);
+   return time>now;
 }
-export var uploadUrl = 'http://172.23.121.226:6325/products/upload';
+export var uploadUrl = 'http://192.168.43.193:6325/products/upload';
 export default {
     setCookie,
     removeCookie,

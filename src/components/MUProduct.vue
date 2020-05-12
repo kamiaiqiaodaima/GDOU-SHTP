@@ -329,7 +329,7 @@ export default {
         this.$refs[formName].resetFields();
       },
       goBack(){
-          this.$router.push(this.backUrl);
+          this.$router.push(path);
     },
     }
 }

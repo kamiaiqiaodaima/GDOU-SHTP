@@ -177,7 +177,7 @@ router.post('/upload', multer({
         res.set({
             'content-type': 'application/json; charset=utf-8'
         });
-        res.send('http://172.23.121.226:6325/static/' + fileInfo.originalname);
+        res.send('http://192.168.43.193:6325/static/' + fileInfo.originalname);
     }
 })
 //发布商品

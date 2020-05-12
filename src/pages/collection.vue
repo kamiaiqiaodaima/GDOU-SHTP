@@ -46,7 +46,7 @@ export default {
       collectList:[],
       loading:false,
       hasCollect:true,
-      hasCollectText:'登录后可同步购物车中商品',
+      hasCollectText:'登录后可同步收藏的商品',
       userId:''
     }
   },

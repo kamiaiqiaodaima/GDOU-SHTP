@@ -38,7 +38,7 @@
 </template>
 <script>
 const {modifyUser,checkname,checkuserphone,checkuserwechat,userSearch} = require('../api');
-const {lookCookie} = require('../utils');
+const {lookCookie,setCookie} = require('../utils');
 export default {
      data() {
           var checkUsername = (rule, value, callback) => {
@@ -173,6 +173,7 @@ export default {
                          userclass:grade,
                        });
                        if(data.modifiedCount>0){
+                           setCookie('userName',Username,1)
                            this.$notify({
                              title: '修改成功',
                              message: `恭喜你，您的信息修改成功`,

@@ -10,7 +10,7 @@
                <ul class="search-list" v-if="sellProductList.length>0">
                    <li v-for="item in sellProductList" :key="item._id" @click="goMUProduct(item._id)">
                        <img :src="item.PRODUCT_PIC[0]">
-                       <div class="soldout" v-if="compareTime2(item.DEADLINE)">已过截止时间,不在其它页面展示</div>
+                       <div class="soldout" v-if="!compareTime2(item.DEADLINE)"> <div> 已过截止时间</div> <div>不在其它页面展示</div> </div>
                        <div class="info">
                            <div class="title">{{item.PRODUCT_NAME}}</div>
                            <div class="type">{{translateType2(item.PRODUCT_CLASS)}}</div>
@@ -91,6 +91,7 @@ export default {
             }
         },
         compareTime2(val){
+            window.console.log(val);
         return compareTime(val);
       }
     }
@@ -143,7 +144,9 @@ export default {
             width: 100%;
             height: 250px;
             text-align: center;
-            line-height: 250px;
+            box-sizing: border-box;
+            padding-top: 80px;
+            line-height: 30px;
             background-color: rgba(0,0,0,0.4);
             color: #fff;
         }

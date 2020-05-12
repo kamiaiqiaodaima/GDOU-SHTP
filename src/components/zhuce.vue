@@ -192,7 +192,6 @@ export default {
           }
           } 
         });
-        this.loading = false;
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();

@@ -31,7 +31,9 @@ import {
     Table,
     TableColumn,
     Pagination,
-    Tag
+    Tag,
+    MessageBox,
+    Message
 } from 'element-ui';
 
 Vue.use(Carousel);
@@ -64,4 +66,7 @@ Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Pagination);
 Vue.use(Tag);
+Vue.component(MessageBox);
 Vue.prototype.$notify = Notification;
+Vue.prototype.$prompt = MessageBox.prompt;
+Vue.prototype.$message = Message;

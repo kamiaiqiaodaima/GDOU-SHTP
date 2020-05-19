@@ -1,6 +1,7 @@
 import axios from 'axios';
+import {apiurl} from '../utils';
 let shtp = axios.create({
-    baseURL:'http://localhost:6325'
+    baseURL:apiurl
 })
 //查询数据库用户名是否存在
 export async function checkname(datas){
@@ -65,6 +66,22 @@ export async function getLunboList (){
     if(data.code==1){
         return data.data;
     }
+}
+//删除轮播图
+export async function delLunboList (datas) {
+    let {data} = await shtp.delete('/slideshow/del',{
+        params:{
+            productid:datas.id
+        }
+    });
+    return data;
+}
+//添加轮播图
+export async function addLunboList (datas){
+    let {data} = await shtp.post('/slideshow/add',{
+        productid:datas.id
+    });
+    return data;
 }
 //获取懒加载商品
 export async function getLazyProductList (size,num,type) {
@@ -230,5 +247,7 @@ export default {
     updateProduct,
     releaseProduct,
     delProduct,
-    adminLog
+    adminLog,
+    delLunboList,
+    addLunboList
 }

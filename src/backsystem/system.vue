@@ -97,8 +97,14 @@ export default {
                     childli:[{
                         idx:2,
                         text:"订单修改",
-                        icon:"el-icon-s-custom",
+                        icon:"el-icon-s-order",
                         path:"listinf"
+                    },
+                    {
+                        idx:3,
+                        text:"轮播图修改",
+                        icon:"el-icon-s-shop",
+                        path:"slideshow"
                     }]
                 }
             ],

@@ -1,10 +1,11 @@
  <template>
     <div>
-        <el-row>
-        <h3 style="float:left;margin-left:10px">商品信息表</h3>
+        <el-row style="padding:10px 10px 0">
+        <h3 style="float:left;margin-left:10px">轮播图信息表</h3>
+         <el-button style="float:right" type="primary" round @click="addlunbo">添加商品到轮播图</el-button>
         </el-row>
 
-        <el-table
+    <el-table
         v-loading ='loading'
         ref="multipleTable"
         tooltip-effect="dark"
@@ -97,30 +98,16 @@
             <template slot-scope="scope">
             <el-button
                 size="mini"
-                @click="handleEdit(scope)"
-            >确认编辑</el-button>
-            <el-button
-                size="mini"
                 type="danger"
                 @click="handleDelete(scope)"
             >删除</el-button>
             </template>
         </el-table-column>
         </el-table>
-        <el-pagination
-        style="margin-top:30px;float:right; margin-right:200px"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        @prev-click="preChange"
-        @next-click="nextChange"
-        background
-        layout="prev, pager, next"
-        :total="datalength"
-        ></el-pagination>
     </div>
 </template>
     <script>
-    const {searchProduct,updateProduct,delProduct} = require('../api');
+    const {getLunboList,delLunboList,addLunboList} = require('../api');
     const {translateType} = require('../utils');
     export default {
     data() {
@@ -143,30 +130,45 @@
         };
     },
     methods: {
+        addlunbo () {
+            this.$prompt('请输入商品ID', '添加商品到轮播图列表', {
+                confirmButtonText: '添加',
+                cancelButtonText: '取消',
+                inputPattern: /[a-zA-Z0-9]{24}/,
+                inputErrorMessage: '商品ID格式不正确'
+                }).then(async ({ value }) => {
+                    this.loading = true;
+                    try{
+                       let data = await addLunboList({id:value});
+                       window.console.log(data);
+                       if(data.code == 1){
+                           this.$message({
+                                type: 'success',
+                                message: '你已成功添加ID为' + value+'的商品'
+                            });
+                       }else{
+                           this.$message({
+                            type: 'warn',
+                            message: '添加失败'
+                        });
+                       }
+                    }catch{
+                        this.$message({
+                            type: 'warn',
+                            message: '添加失败'
+                        });
+                    }
+                    this.$forceUpdate(this.tableData);
+                    this.loading = false;
+                }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '取消输入'
+                });       
+        });
+        },
         translateType2 (val){
             return translateType(val);
-        },
-        async handleEdit(scope) {
-        let data = await updateProduct({
-            productid:scope.row._id,
-            porductname:scope.row.PRODUCT_NAME,
-            productprice:scope.row.PRODUCT_PRICE,
-            productnum:scope.row.PRODUCT_NUM,
-            productclass:scope.row.PRODUCT_CLASS,
-            sellername:scope.row.SELLER_NAME,
-            sellerdorm:scope.row.SELLER_DORM,
-            sellerphone:scope.row.SELLER_PHONE,
-            sellerwechat:scope.row.SELLER_WECHAT,
-            sellerclass:scope.row.SELLER_CLASS,
-            sellersno:scope.row.SELLER_SNO,
-            deadline:scope.row.DEADLINE,
-            describe:scope.row.DESCRIBE
-        })
-        if (data.code === 1) {
-            return;
-        } else {
-            alert("修改失败!");
-        }
         },
         hopo() {
         this.inputshow1 = !this.inputshow1;
@@ -184,47 +186,13 @@
         // eslint-disable-next-line no-unused-vars
         async handleDelete(scope) {
         this.tableData.splice(scope.$index, 1);
-        let data = await delProduct(scope.row._id);
+        let data = await delLunboList({id:scope.row._id});
         if(data.code ===1){
             return;
         }else{
             alert("删除失败");
         }
         this.$forceUpdate(this.tableData);
-        },
-        //上一页
-        async preChange(val) {
-        let { data } = await searchProduct({
-             pagenum:val,
-             pagesize:this.pagesize
-        });
-        //console.log("e",data.data)
-        this.tableData = data;
-        this.$forceUpdate();
-        },
-
-        //下一页
-        async nextChange(val) {
-        let { data } =await searchProduct({
-             pagenum:val,
-             pagesize:this.pagesize
-        });
-        // console.log("e",data.data)
-        this.tableData = data;
-        this.$forceUpdate();
-        },
-        //pageSize变化事件
-        // eslint-disable-next-line no-unused-vars
-        handleSizeChange(val) {},
-
-        //pageNum变化事件
-        async handleCurrentChange(val) {
-        let { data } = await searchProduct({
-             pagenum:val,
-             pagesize:this.pagesize
-        });
-        this.tableData = data;
-        this.$forceUpdate();
         },
         toggleSelection(rows) {
         if (rows) {
@@ -241,13 +209,8 @@
     },
     async created() {
         this.loading = true;
-        let { data } = await searchProduct({
-             pagenum:1,
-             pagesize:this.pagesize
-        });
-        let length = await searchProduct({});
+        let data  = await getLunboList({});
         this.tableData = data;
-        this.datalength = length.data;
         this.loading = false;
     }
     };

@@ -72,7 +72,8 @@ export function compareTime(val){
    window.console.log(val,time,now,time>now);
    return time>now;
 }
-export var uploadUrl = 'http://192.168.43.193:6325/products/upload';
+export var uploadUrl = 'http://localhost:6325/products/upload';
+export var apiurl = 'http://localhost:6325';
 export default {
     setCookie,
     removeCookie,
@@ -80,5 +81,6 @@ export default {
     translateType,
     dateFormat,
     compareTime,
-    uploadUrl
+    uploadUrl,
+    apiurl
 }

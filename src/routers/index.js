@@ -23,9 +23,9 @@ const system = () =>import('../backsystem/system.vue');
 const userinf = () =>import('../backsystem/userinf.vue');
 const listinf = () =>import('../backsystem/listinf.vue');
 const adduser = () =>import('../backsystem/adduser.vue');
-
+const slideshow = () =>import('../backsystem/slideshow.vue');
 let router = new VueRouter({
-    mode:'hash',
+    mode:'history',
     routes:[
         {
             path:'/console',
@@ -55,6 +55,11 @@ let router = new VueRouter({
                     path: '/adduser',
                     component: adduser
                 },
+                {
+                    name: 'slideshow',
+                    path: '/slideshow',
+                    component: slideshow
+                }
             ]
         },
         {

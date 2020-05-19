@@ -7,6 +7,8 @@ let {formatData} = require('../utils');
 //根据productid获取所有轮播图
 router.get('/all',async (req,res)=>{
     let slideshowId = await mongo.find(colName);
+    // eslint-disable-next-line no-console
+    console.log(slideshowId);
     let slideshowIdArr = slideshowId.map(function(item){
         return {
             _id:ObjectId(item.PRODUCTSID.trim()) 
@@ -21,22 +23,41 @@ router.get('/all',async (req,res)=>{
 })
 //根据productid删除轮播图,只能单个删除
 router.delete('/del',async (req,res)=>{
-    let {productid} = req.body;
-    try{
-        await mongo.remove(colName,[{PRODUCTSID:productid}])
-        res.send(formatData());
-    }catch{
+    let {productid} = req.query;
+    if(productid){
+        try{
+            await mongo.remove(colName,[{PRODUCTSID:productid}])
+            res.send(formatData());
+        }catch{
+            res.send(formatData({code:0}))
+        }
+    }else{
         res.send(formatData({code:0}))
     }
 })
 //根据productid添加商品到轮播图
 router.post('/add',async (req,res)=>{
     let {productid} = req.body;
-    try{
-       await mongo.create(colName,[{PRODUCTSID:productid}]);
-       res.send(formatData());
-    }catch{
-       res.send(formatData({code:0}))
+    if(productid){
+        let slideshowId = await mongo.find(colName);
+        let hasslide = false;
+        slideshowId.map(item=>{
+            if(item.PRODUCTSID ==productid ){
+                hasslide = true;
+            }
+        })
+        if(hasslide){
+            res.send(formatData({code:0}))
+        }else{
+            try{
+               await mongo.create(colName,[{PRODUCTSID:productid}]);
+               res.send(formatData());
+            }catch{
+               res.send(formatData({code:0}))
+            }
+        }
+    }else{
+        res.send(formatData({code:0}))
     }
 })
 

@@ -37,7 +37,7 @@
  </div>
 </template>
 <script>
-const {modifyUser,checkname,checkuserphone,checkuserwechat,userSearch} = require('../api');
+const {modifyUser,userSearch} = require('../api');
 const {lookCookie,setCookie} = require('../utils');
 export default {
      data() {
@@ -47,11 +47,15 @@ export default {
                     if (value.length<3||value.length>8) {
                       callback(new Error('用户名应为3到8位字符'));
                     } else {
-                        let data =await checkname(value);
-                        if(data.data===0){
-                            callback(); 
+                        let {data} =await userSearch({keywords:value});
+                        if(data.length>0){
+                            if(data[0]._id != lookCookie('userId')){
+                                callback(new Error('用户名已存在，请重新命名')); 
+                            }else{
+                                callback();
+                            }
                         }else{
-                            callback(new Error('用户名已存在，请重新命名')); 
+                            callback();
                         }
                       }
                   }, 1000);
@@ -82,12 +86,16 @@ export default {
           if(!(/^1[3456789]\d{9}$/.test(value.trim()))){
               callback(new Error('请输入正确的手机号'));
           }else{
-              let {data} = await checkuserphone(value);
-              if(data==1){
-                  callback(new Error('该手机号已被注册,若有问题请联系管理员'));
-              }else{
+            let {data} =await userSearch({keywords:value});
+            if(data.length>0){
+                if(data[0]._id != lookCookie('userId')){
+                    callback(new Error('该手机号已被注册,若有问题请联系管理员')); 
+                }else{
+                    callback();
+                }
+            }else{
                 callback();
-              }
+            }
           }
       }else{
           callback();
@@ -106,12 +114,16 @@ export default {
       };
        var checkwechat = async (rule,value,callback)=>{//微信号
         if(value){
-                let {data} = await checkuserwechat(value);
-                if(data==1){
-                    callback(new Error('该微信号已被注册,若不是本人操作,请联系管理员'));
+            let {data} =await userSearch({keywords:value});
+            if(data.length>0){
+                if(data[0]._id != lookCookie('userId')){
+                    callback(new Error('该微信号已被注册,若不是本人操作,请联系管理员')); 
                 }else{
                     callback();
                 }
+            }else{
+                callback();
+            }
         }else{
           callback();
       }

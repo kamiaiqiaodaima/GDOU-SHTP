@@ -1,0 +1,9 @@
+{"_id":{"$oid":"5eabf5c0a455b10e8dbe5cec"},"TYPE":"digital","NAME":"数码"}
+{"_id":{"$oid":"5eabf5efa455b10e8dbe5cfd"},"TYPE":"sports","NAME":"运动"}
+{"_id":{"$oid":"5eabf610a455b10e8dbe5d06"},"TYPE":"books","NAME":"书籍"}
+{"_id":{"$oid":"5eabf625a455b10e8dbe5d0a"},"TYPE":"lives","NAME":"生活用品"}
+{"_id":{"$oid":"5eabf644a455b10e8dbe5d12"},"TYPE":"traffic","NAME":"交通工具"}
+{"_id":{"$oid":"5eabf65ba455b10e8dbe5d14"},"TYPE":"dress_shoes","NAME":"衣鞋"}
+{"_id":{"$oid":"5eabf671a455b10e8dbe5d18"},"TYPE":"music","NAME":"音乐"}
+{"_id":{"$oid":"5eabf68ba455b10e8dbe5d20"},"TYPE":"pet","NAME":"宠物"}
+{"_id":{"$oid":"5eabf69ca455b10e8dbe5d24"},"TYPE":"others","NAME":"其它"}
